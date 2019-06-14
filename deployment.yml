@@ -1,0 +1,48 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: '2019-05-15T08:15:16Z'
+  labels:
+    app: helloamex
+  name: helloamex
+  namespace: amexpoc
+  resourceVersion: '4033872810'
+  selfLink: /apis/build.openshift.io/v1/namespaces/amexpoc/buildconfigs/helloamex
+  uid: 924d8edd-76e9-11e9-b675-122631632f42
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'helloamex:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/sharmajee1/flask-hello-world.git'
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'python:3.6'
+        namespace: openshift
+    type: Source
+  triggers:
+    - imageChange:
+        lastTriggeredImageID: >-
+          docker-registry.default.svc:5000/openshift/python@sha256:9f044e4c0ee877dd9b2e0108d8b33f034977f87a746cfccb7defc9a588144b2d
+      type: ImageChange
+    - type: ConfigChange
+    - generic:
+        secret: 723189457c8addf3
+      type: Generic
+    - github:
+        secret: 004e51260f3ea555
+      type: GitHub
+status:
+  lastVersion: 16
